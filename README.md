@@ -63,6 +63,16 @@ After that, any calls made to `&Timed.foo/1` will be wrapped in a timer, which
 will push an observation to `:foo`. The labels which will be associated with
 the metric will be the module and function name, respectively.
 
+## Contributing
+
+Contributions are welcome. The project is Dockerised and controlled using GNU
+Make commands. To get started, run `make init` from the root directory, and you
+will build and start the container, then be presented with an interactive
+shell.
+
+When operating in development and test modes, a small Plug router will be spun
+up to run an exporter. In dev it will be available on port 4000, in test 4001.
+
 ## License
 
 ```

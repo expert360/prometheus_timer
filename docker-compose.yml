@@ -3,6 +3,9 @@ services:
   prometheus_timer:
     build:
       context: .
+    ports:
+      - "4000:4000"
+      - "4001:4001"
     entrypoint: "tail -f /dev/null"
     working_dir: /usr/src/prometheus_timer
     volumes:
