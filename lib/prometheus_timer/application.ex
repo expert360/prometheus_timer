@@ -1,6 +1,9 @@
 defmodule PrometheusTimer.Application do
   @moduledoc false
 
+  alias Plug.Adapters.Cowboy
+  alias PrometheusTimer.Web.{Exporter, Router}
+
   def start(_, _) do
     import Supervisor.Spec
 
@@ -12,12 +15,12 @@ defmodule PrometheusTimer.Application do
   end
 
   defp mix_env_children(env) when env in [:dev, :test] do
-    PrometheusTimer.Web.Exporter.setup()
+    Exporter.setup()
 
     [
-      Plug.Adapters.Cowboy.child_spec(
+      Cowboy.child_spec(
         scheme: url_scheme(),
-        plug: PrometheusTimer.Web.Router,
+        plug: Router,
         options: [port: port()]
       )
     ]

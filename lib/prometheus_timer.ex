@@ -35,13 +35,13 @@ defmodule PrometheusTimer do
   end
 
   def init(_) do
-    timers       = timers()
+    timers = timers()
     instrumenter = instrumenter()
 
     Enum.each(timers, fn timer ->
-      Logger.debug fn ->
-        "Starting timer #{inspect timer}"
-      end
+      Logger.debug(fn ->
+        "Starting timer #{inspect(timer)}"
+      end)
 
       timer
       |> Keyword.put(:labels, [:module, :function])
@@ -68,7 +68,9 @@ defmodule PrometheusTimer do
     timer = Module.get_attribute(mod, :timed, nil)
 
     if timer != nil do
-      Module.put_attribute(mod, :functions, {timer, kind, fun, args, guards, body})
+      Module.put_attribute(mod, :functions,
+        {timer, kind, fun, args, guards, body})
+
       Module.put_attribute(mod, :timed, nil)
     end
   end
