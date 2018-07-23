@@ -1,0 +1,57 @@
+version: '2'
+jobs:
+  ci:
+    working_directory: /usr/src/prometheus_timer
+    docker:
+      - image: elixir:1.6-alpine
+    steps:
+      - checkout:
+          path: /usr/src/prometheus_timer
+      - restore_cache:
+          keys:
+            - v1-prometheus_timer-{{ checksum "mix.lock" }}-{{ .Branch }}-{{ .Revision }}
+            - v1-prometheus_timer-{{ checksum "mix.lock" }}-{{ .Branch }}-
+            - v1-prometheus_timer-{{ checksum "mix.lock" }}-
+      - run:
+          name: Install Image Deps
+          command: |
+            set -eou pipefail
+            apk update
+            apk add git build-base curl bash
+      - run:
+          name: Install Application Deps
+          command: |
+            set -eou pipefail
+            mix local.hex --force
+            mix local.rebar --force
+            mix deps.get
+            mix deps.compile
+            mix clean
+      - run:
+          name: Compile
+          command: mix compile --force
+      - save_cache:
+          key: v1-prometheus_timer-{{ checksum "mix.lock" }}-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - /usr/src/prometheus_timer/deps
+            - /usr/src/prometheus_timer/_build
+            - /root/.hex/
+            - /root/.mix/
+            - /root/.cache/rebar3/
+      - run:
+          name: Lint
+          command: mix credo --strict
+      - run:
+          name: Test
+          command: mix coveralls.json
+      - run:
+          name: Upload Coverage
+          command: |
+            curl -s https://codecov.io/bash > .codecov
+            chmod +x .codecov
+            ./.codecov
+workflows:
+  version: 2
+  prometheus_timer:
+    jobs:
+      - ci
