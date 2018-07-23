@@ -1,0 +1,9 @@
+version: '3'
+services:
+  prometheus_timer:
+    build:
+      context: .
+    entrypoint: "tail -f /dev/null"
+    working_dir: /usr/src/prometheus_timer
+    volumes:
+      - .:/usr/src/prometheus_timer
