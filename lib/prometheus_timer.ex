@@ -1,7 +1,5 @@
 defmodule PrometheusTimer do
-  @moduledoc """
-  See README.md for details.
-  """
+  @moduledoc false
 
   @template ~s"""
   <%= type %> <%= name %>(<%= arg_str %>) <%= guard_str %> do

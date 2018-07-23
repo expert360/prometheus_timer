@@ -1,7 +1,5 @@
 defmodule PrometheusTimer.Instrumenter do
-  @moduledoc """
-  Behaviour to allow mocking of instrumenter in tests
-  """
+  @moduledoc false
   @callback new(Keyword.t()) :: any()
   @callback observe(Keyword.t(), integer()) :: any()
 end

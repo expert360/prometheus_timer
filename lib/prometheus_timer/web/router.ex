@@ -1,7 +1,5 @@
 defmodule PrometheusTimer.Web.Router do
-  @moduledoc """
-  Mini-plug router to use for testing
-  """
+  @moduledoc false
   use Plug.Router
 
   plug PrometheusTimer.Web.Exporter

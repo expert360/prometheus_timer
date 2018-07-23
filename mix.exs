@@ -4,7 +4,7 @@ defmodule PrometheusTimer.MixProject do
   def project do
     [
       app: :prometheus_timer,
-      version: "0.1.0",
+      version: "0.1.1",
       elixir: "~> 1.6",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -17,6 +17,10 @@ defmodule PrometheusTimer.MixProject do
         "coveralls.html": :test,
         "coveralls.json": :test
       ],
+      docs: [
+        main: "readme",
+        extras: ["README.md"]
+      ]
     ]
   end
 
@@ -35,7 +39,8 @@ defmodule PrometheusTimer.MixProject do
       {:cowboy, "~> 1.0", only: [:dev, :test]},
       {:prometheus_plugs, ">= 0.0.0", only: [:dev, :test]},
       {:credo, ">= 0.0.0", only: [:dev, :test]},
-      {:excoveralls, ">= 0.0.0", only: :test}
+      {:excoveralls, ">= 0.0.0", only: :test},
+      {:ex_doc, ">= 0.0.0", only: :dev}
     ]
   end
 
