@@ -9,12 +9,12 @@ defmodule PrometheusTimer.Application do
 
     children = [
       supervisor(PrometheusTimer, [])
-    ] ++ mix_env_children(Mix.env)
+    ] ++ server_spec(server())
 
     Supervisor.start_link(children, strategy: :one_for_one)
   end
 
-  defp mix_env_children(env) when env in [:dev, :test] do
+  defp server_spec(true) do
     Exporter.setup()
 
     [
@@ -25,8 +25,11 @@ defmodule PrometheusTimer.Application do
       )
     ]
   end
-  defp mix_env_children(_), do: []
+  defp server_spec(_), do: []
 
+
+  defp server,
+    do: Application.get_env(:prometheus_timer, :server, false)
   defp port,
     do: Application.get_env(:prometheus_timer, :port, 4000)
   defp url_scheme,

@@ -28,6 +28,8 @@ defmodule PrometheusTimer do
 
   require Logger
 
+  alias PrometheusTimer.Instrumenter.Default
+
   def start_link do
     GenServer.start_link(__MODULE__, [])
   end
@@ -58,7 +60,9 @@ defmodule PrometheusTimer do
       @before_compile unquote(__MODULE__)
       @on_definition unquote(__MODULE__)
 
-      defp instrumenter, do: Application.fetch_env!(:prometheus_timer, :instrumenter)
+      defp instrumenter do
+        Application.get_env(:prometheus_timer, :instrumenter, Default)
+      end
     end
   end
 
@@ -137,6 +141,8 @@ defmodule PrometheusTimer do
     end
   end
 
-  defp instrumenter, do: Application.fetch_env!(:prometheus_timer, :instrumenter)
+  defp instrumenter do
+    Application.get_env(:prometheus_timer, :instrumenter, Default)
+  end
   defp timers, do: Application.fetch_env!(:prometheus_timer, :timers)
 end

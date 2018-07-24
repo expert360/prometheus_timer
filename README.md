@@ -1,5 +1,8 @@
 # PrometheusTimer
 
+[![Hex version badge](https://img.shields.io/hexpm/v/prometheus_timer.svg)](https://hex.pm/packages/prometheus_timer)
+[![Build status badge](https://img.shields.io/circleci/project/github/expert360/prometheus_timer/master.svg)](https://circleci.com/gh/expert360/prometheus_timer/tree/master)
+
 A [Prometheus](https://github.com/deadtrickster/prometheus.ex) helper which
 uses "annotations" to apply timers to functions. It works by overriding the
 original function with an implementation which includes code to instrument
@@ -9,13 +12,13 @@ Inspired by [Elixometer](https://github.com/pinterest/elixometer).
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `prometheus_timer` to your list of dependencies in `mix.exs`:
+The package can be installed by adding `prometheus_timer` to your list of
+dependencies in `mix.exs`:
 
 ```elixir
 def deps do
   [
-    {:prometheus_timer, "~> 0.1.0"}
+    {:prometheus_timer, "~> 0.1"}
   ]
 end
 ```

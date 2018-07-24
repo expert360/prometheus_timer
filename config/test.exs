@@ -9,5 +9,6 @@ config :prometheus_timer,
       help: "Used to test timers in tests"
     ]
   ],
+  server: true,
   url_scheme: :http,
   port: 4001
