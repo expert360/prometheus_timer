@@ -8,6 +8,7 @@ config :prometheus,
 
 config :prometheus_timer,
   instrumenter: PrometheusTimer.Instrumenter.Default,
-  timers: []
+  timers: [],
+  purge_from: [:dev]
 
 import_config "#{Mix.env}.exs"

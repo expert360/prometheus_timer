@@ -30,6 +30,8 @@ defmodule PrometheusTimer do
 
   alias PrometheusTimer.Instrumenter.Default
 
+  @purge_from Application.get_env(:prometheus_timer, :purge_from, [])
+
   def start_link do
     GenServer.start_link(__MODULE__, [])
   end
@@ -69,7 +71,7 @@ defmodule PrometheusTimer do
   def __on_definition__(%{module: mod}, kind, fun, args, guards, body) do
     timer = Module.get_attribute(mod, :timed, nil)
 
-    if timer != nil do
+    if timer != nil and Mix.env not in @purge_from do
       Module.put_attribute(mod, :functions,
         {timer, kind, fun, args, guards, body})
 
