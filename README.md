@@ -29,7 +29,7 @@ The first step is to provide configuration for your timers. This is done using
 configuration, with each bucket configuration being provided in the format
 expected when calling `&Prometheus.Metric.Histogram.new/1`:
 
-```
+```elixir
 use Mix.Config
 
 config :prometheus_timer, timers: [
@@ -51,7 +51,7 @@ Once installed, any module can be enabled for timers by `use`-ing the module
 `PromethusTimer`. Then functions can have timers added to them by using the
 annotation `@timed`, followed by the name of the timer:
 
-```
+```elixir
 defmodule Timed do
   use PrometheusTimer
 
@@ -65,6 +65,16 @@ end
 After that, any calls made to `&Timed.foo/1` will be wrapped in a timer, which
 will push an observation to `:foo`. The labels which will be associated with
 the metric will be the module and function name, respectively.
+
+At times it can be inconvenient to have your function internals rewritten, most
+notably for when you're in dev or test, and need to be able to rely on a stack
+trace to help debug problems. To facilitate this, there is an option in config
+called `purge_from`, which takes a list of `Mix.env` compatible atoms
+indicating that timers are to be ignored in those environments:
+
+```elixir
+config :prometheus_timer, purge_from: [:dev, :test]
+```
 
 ## Contributing
 
