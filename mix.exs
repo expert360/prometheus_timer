@@ -4,7 +4,7 @@ defmodule PrometheusTimer.MixProject do
   def project do
     [
       app: :prometheus_timer,
-      version: "0.1.7",
+      version: "0.1.8",
       elixir: "~> 1.6",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
